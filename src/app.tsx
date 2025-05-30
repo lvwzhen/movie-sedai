@@ -51,7 +51,7 @@ export const App = () => {
 
     const a = document.createElement("a")
     a.href = url
-    a.download = "anime-sedai.png"
+    a.download = "movie-sedai.png"
     a.click()
 
     URL.revokeObjectURL(url)

@@ -1,4 +1,4 @@
-# anime-sedai
+# movie-sedai
 
 To install dependencies:
 
