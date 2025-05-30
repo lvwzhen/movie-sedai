@@ -157,7 +157,7 @@ ${Object.keys(animeData)
                     return year.map((item) => item.title).slice(0, 12)
                   }).length
                 }{" "}
-                部动画
+                部电影
               </span>
             </div>
             {Object.keys(animeData).map((year) => {
