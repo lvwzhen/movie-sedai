@@ -2,7 +2,38 @@ type Data = {
   [key: string]: { title: string; score: number }[];
 };
 
-const data: Data = {
+// Helper function to deduplicate movies
+const deduplicateMovies = (data: Data): Data => {
+  const movieMap = new Map<string, { year: string; score: number }>();
+  
+  // First pass: collect all movies and keep the highest rated version
+  Object.entries(data).forEach(([year, movies]) => {
+    movies.forEach(movie => {
+      const existing = movieMap.get(movie.title);
+      if (!existing || movie.score > existing.score) {
+        movieMap.set(movie.title, { year, score: movie.score });
+      }
+    });
+  });
+  
+  // Second pass: create new data structure with deduplicated movies
+  const result: Data = {};
+  movieMap.forEach((value, title) => {
+    if (!result[value.year]) {
+      result[value.year] = [];
+    }
+    result[value.year]!.push({ title, score: value.score });
+  });
+  
+  // Sort movies within each year by score in descending order
+  Object.keys(result).forEach(year => {
+    result[year]!.sort((a, b) => b.score - a.score);
+  });
+  
+  return result;
+};
+
+const rawData: Data = {
   "2005": [
     { "title": "功夫", "score": 8.7 },
     { "title": "七剑", "score": 7.0 },
@@ -362,5 +393,6 @@ const data: Data = {
   ]
 }
 
+const data = deduplicateMovies(rawData);
 
 export default data;
